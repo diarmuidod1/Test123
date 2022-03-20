@@ -1,0 +1,240 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+.btn {
+  border: 2px solid black;
+  background-color: white;
+  color: black;
+  padding: 14px 28px;
+  font-size: 16px;
+  cursor: pointer;
+  border-color: #04AA6D;
+  color: green;
+  
+}
+
+/* Green */
+.success {
+  border-color: #04AA6D;
+  color: green;
+}
+
+.btn:hover {
+  background-color: #04AA6D;
+  color: white;
+}
+
+
+
+.default:hover {
+  background: #e7e7e7;
+}
+</style>
+
+
+
+
+  
+<style>
+body {
+  font-family: Arial;
+  font-size: 17px;
+  padding: 8px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.row {
+  display: -ms-flexbox; /* IE10 */
+  display: flex;
+  -ms-flex-wrap: wrap; /* IE10 */
+  flex-wrap: wrap;
+  margin: 0 -16px;
+}
+
+.col-25 {
+  -ms-flex: 25%; /* IE10 */
+  flex: 25%;
+}
+
+.col-50 {
+  -ms-flex: 50%; /* IE10 */
+  flex: 50%;
+}
+
+.col-75 {
+  -ms-flex: 75%; /* IE10 */
+  flex: 75%;
+}
+
+.col-25,
+.col-50,
+.col-75 {
+  padding: 0 16px;
+}
+
+.container {
+  background-color: #f2f2f2;
+  padding: 5px 20px 15px 20px;
+  border: 1px solid lightgrey;
+  border-radius: 3px;
+}
+
+input[type=text] {
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+label {
+  margin-bottom: 10px;
+  display: block;
+}
+
+.icon-container {
+  margin-bottom: 20px;
+  padding: 7px 0;
+  font-size: 24px;
+}
+
+.btn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 12px;
+  margin: 10px 0;
+  border: none;
+  width: 100%;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 17px;
+}
+
+.btn:hover {
+  background-color: #45a049;
+}
+
+a {
+  color: #2196F3;
+}
+
+hr {
+  border: 1px solid lightgrey;
+}
+
+span.price {
+  float: right;
+  color: grey;
+}
+
+/* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other (also change the direction - make the "cart" column go on top) */
+@media (max-width: 800px) {
+  .row {
+    flex-direction: column-reverse;
+  }
+  .col-25 {
+    margin-bottom: 20px;
+  }
+}
+</style>
+
+<body>
+ {% for d in md %} 
+<h2>User Details Form</h2>
+</p>
+
+<div class="row">
+
+  <div class="col-75">
+    <div class="container">
+      <form action="/form_userdetails">
+      
+        <div class="row">
+          <div class="col-50">
+            <h3>Address Details</h3>
+            <div class="row">
+              <div class="col-50">
+                <label for="fname"><i class="fa fa-user"></i> First Name</label>
+                <input type="text" id="fname" name="firstname" value="{{ d.firstname }}" >
+              </div> 
+              <div class="col-50">
+                <label for="surname"><i class="fa fa-user"></i> Surname</label>
+                <input type="text" id="email" name="surname" value="{{ d.surname }}">
+              </div>
+            </div>
+            <label for="adr"><i class="fa fa-address-card-o"></i> Address</label>                
+            <input type="text" id="adr" name="address" value="{{ d.address1 }}">
+            <label for="city"><i class="fa fa-institution"></i> City/Town</label>
+            <input type="text" id="city" name="city" value="{{ d.city }}">
+
+            <div class="row">
+              <div class="col-50">
+                <label for="county">County</label>
+                <input type="text" id="county" name="county" value="{{ d.county }}">
+              </div>
+              <div class="col-50">
+                <label for="eircode">Eir Code</label>
+                <input type="text" id="eircode" name="eircode"  value="{{ d.eircode }}">
+              </div>
+            </div>
+
+            <label for="country"><i class="fa fa-country"></i> Country</label>
+            <input type="text" id="country" name="country" value="{{ d.country }}">
+         
+          </div>
+     
+          <div class="col-50">
+          
+            <h3>General Details</h3>            
+            <div class="row">
+              <div class="col-50">
+                <label for="email"><i class="fa fa-user"></i> Email (Account + Alert)</label>
+                <input type="text" id="email" name="email" value="{{ d.email }}" >
+              </div> 
+              <div class="col-50">
+                <label for="email2"><i class="fa fa-user"></i> Email (Security Alerts Only)</label>
+                <input type="text" id="email2" name="email2" value="{{ d.email2 }}">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-50">
+                <label for="telno"><i class="fa fa-phone"></i> Telephone No.</label>
+                <input type="text" id="telno" name="telno" value="{{ d.telno }}" >
+              </div> 
+              <div class="col-50">
+                <label for="telno2"><i class="fa fa-phone"></i> Alternative/Backup  Telephone No</label>
+                <input type="text" id="telno2" name="telno2" value="{{ d.telno2 }}">
+              </div>
+            </div>       
+            
+            <label for="refno"> Customer Reference No. </label>
+            <input type="text" id="refno" name="refno" value="{{ d.refno }}" readonly>
+            
+            <label for="refno"> Customer's Contract Option </label>
+            <input type="text" id="refno" name="refno" value="{{ d.contract }}" readonly>
+            
+            <label for="addaccounts"> Additional SafeHome Access To: </label>
+            <input type="text" id="addaccounts" name="addacounts" value="{{ d.addaccounts }}" readonly>
+          </div>
+          
+        </div>
+       
+        <label><b>Please feel free to contact SafeHouse about any security concerns or additional services.</b>
+        </label>
+        <button type="Submit" class ="btn">Submit</button>
+      </form>
+    </div>
+  </div>
+
+</div> 
+  {% endfor %}
+
+</body>
+
+
+{% endblock %}

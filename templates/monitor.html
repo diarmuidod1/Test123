@@ -1,0 +1,376 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<style>
+#devices {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#devices td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#devices tr:nth-child(even){background-color: #f2f2f2;}
+
+#devices tr:hover {background-color: #ddd;}
+
+#devices th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04AA6D;
+  color: white;
+}
+</style>
+
+<style>
+.btn {
+  border: 2px solid black;
+  background-color: white;
+  color: black;
+  padding: 14px 28px;
+  font-size: 16px;
+  cursor: pointer;
+  border-color: #04AA6D;
+  color: green;
+  
+}
+
+/* Green */
+.success {
+  border-color: #04AA6D;
+  color: green;
+}
+
+.btn:hover {
+  background-color: #04AA6D;
+  color: white;
+}
+
+
+
+.default:hover {
+  background: #e7e7e7;
+}
+</style>
+
+
+
+
+  
+<style>
+body {
+  font-family: Arial;
+  font-size: 17px;
+  padding: 8px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.row {
+  display: -ms-flexbox; /* IE10 */
+  display: flex;
+  -ms-flex-wrap: wrap; /* IE10 */
+  flex-wrap: wrap;
+  margin: 0 -16px;
+}
+
+.col-25 {
+  -ms-flex: 25%; /* IE10 */
+  flex: 25%;
+}
+
+.col-50 {
+  -ms-flex: 50%; /* IE10 */
+  flex: 50%;
+}
+
+.col-75 {
+  -ms-flex: 75%; /* IE10 */
+  flex: 75%;
+}
+
+.col-25,
+.col-50,
+.col-75 {
+  padding: 0 16px;
+}
+
+.container {
+  background-color: #f2f2f2;
+  padding: 5px 20px 15px 20px;
+  border: 1px solid lightgrey;
+  border-radius: 3px;
+}
+
+input[type=text] {
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+label {
+  margin-bottom: 10px;
+  display: block;
+}
+
+.icon-container {
+  margin-bottom: 20px;
+  padding: 7px 0;
+  font-size: 24px;
+}
+
+.btn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 12px;
+  margin: 10px 0;
+  border: none;
+  width: 100%;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 17px;
+}
+
+.btn:hover {
+  background-color: #45a049;
+}
+
+a {
+  color: #2196F3;
+}
+
+hr {
+  border: 1px solid lightgrey;
+}
+
+span.price {
+  float: right;
+  color: grey;
+}
+
+/* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other (also change the direction - make the "cart" column go on top) */
+@media (max-width: 800px) {
+  .row {
+    flex-direction: column-reverse;
+  }
+  .col-25 {
+    margin-bottom: 20px;
+  }
+}
+</style>
+<style>
+dl dt{
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+}
+dl dd{
+    display: inline-block;
+    margin: 0px 10px;
+    padding-bottom: 0;
+    vertical-align: middle;
+}
+dl dt.red{
+    background: red;
+}
+dl dt.orange{
+    background: orange;
+}
+dl dt.good{
+    background: #f2f2f2; 
+} 
+
+dl dt.mode{
+    background: #008CBA;; 
+} 
+</style>
+<style>
+.button {
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.button1 {background-color: #4CAF50;} /* Green */
+.button2 {background-color: #008CBA;} /* Blue */
+</style>
+</head>
+<body>
+<h2>Monitor Devices</h2>
+<h4>Last Updated : {{ updatetime }} </h4> 
+
+
+
+<div class="row">
+  <div class="col-75">
+    <div class="container">
+      <h3>Devices Report for  {{ udesc}}</h3> 
+     
+        <form action="/form_set_mode">
+<button class="{% if  umode == 'Day Mode' %}button button2{% else %}button button1{% endif %}"  type="submit" name = "modename" value="Day Mode">Day Mode</button>
+<button class="{% if  umode == 'Night Mode' %}button button2{% else %}button button1{% endif %}"  type="submit" name = "modename" value="Night Mode">Night Mode</button>
+        <button class="{% if  umode == 'Out Mode' %}button button2{% else %}button button1{% endif %}"  type="submit" name = "modename" value="Out Mode">Out Mode</button>
+   <button class="{% if  umode == 'Off Mode' %}button button2{% else %}button button1{% endif %}"  type="submit" name = "modename" value="Off Mode">Off Mode</button>
+        
+ </form> 
+ 
+           <dl> 
+    <dt class="mode"></dt>
+    <dd>Denotes active mode </dd></body></dl>
+  <dl> <dt class="red"></dt>
+    <dd>Severe Warning - Alarm Raised </dd>
+    <dt class="orange"></dt>
+    <dd>Sensor not working </dd>
+    <dt class="good"></dt>
+    <dd>Sensor fully operational (form background)</dd></body></dl>
+          
+        
+      <table id="devices" >
+      <tr>  
+        <th> Room Description </th>
+        <th> Device Name </th>
+        <th> Alarm Raised</th> 
+        <th> Active </th>
+        <th> Operational </th>
+        <th> Action </th>
+        <th> Last Activity</th>
+      </tr>
+      {% for d in md %} 
+      <tr>
+      {% if d.alarmraised == 'True' %}
+        <td style="background-color:red"> {{ d.locname }} </td>
+        <td style="background-color:red"> {{ d.devname }} </td>
+        <td style="background-color:red"> {{ d.alarmraised }} </td>
+        <td style="background-color:red"> {{ d.alarmactive }} </td> 
+        <td style="background-color:red"> {{ d.lastupdatetimenoupdate }} </td>
+
+        <td style="background-color:red">  
+        <form action="/form_dev_reset">
+           
+          <input type="hidden" id="locname" name="locname" value="{{ d.locname }}">
+          <button type="submit" name = "devname" value="{{ d.devname }}">Reset Alarm</button>
+          
+        </form>    
+        
+        
+        
+        
+        </td>
+        <td style="background-color:red">  </td>
+      {% elif d.alarmactive == 'False' %}
+        <td style="background-color:orange"> {{ d.locname }}  </td>
+        <td style="background-color:orange">  {{ d.devname }}  </td>
+        <td style="background-color:orange">  {{ d.alarmraised }} </td>      
+        <td style="background-color:orange"> {{ d.alarmactive }} </td> 
+        <td style="background-color:orange">  {{ d.lastupdatetimenoupdate }} </td>      
+        <td style="background-color:orange">   </td> 
+        <td style="background-color:orange"> </td>
+      {% else %}   
+        <td> {{ d.locname }}  </td>
+        <td> {{ d.devname }}  </td>
+        <td> {{ d.alarmraised }} </td>
+        <td> {{ d.alarmactive }} </td> 
+        <td> {{ d.lastupdatetimenoupdate }} </td> 
+        <td>  </td>
+        <td>  </td>
+      {% endif %}  
+      </tr>
+            {% endfor %} 
+      </table>
+    </div>
+  </div>
+  
+
+ </div> 
+
+<div class="row">
+</div><br><br><div>  
+<div class="row">
+  <div class="col-75">
+    <div class="container">     
+<h3>Devices Report for  {{ adesc}}</h3>
+      <form action="/form_set_mode">
+<button class="{% if  umode == 'Day Mode' %}button button2{% else %}button button1{% endif %}"  type="submit" name = "modename" value="Day Mode">Day Mode</button>
+<button class="{% if  umode == 'Night Mode' %}button button2{% else %}button button1{% endif %}"  type="submit" name = "modename" value="Night Mode">Night Mode</button>
+        <button class="{% if  umode == 'Out Mode' %}button button2{% else %}button button1{% endif %}"  type="submit" name = "modename" value="Out Mode">Out Mode</button>
+   <button class="{% if  umode == 'Off Mode' %}button button2{% else %}button button1{% endif %}"  type="submit" name = "modename" value="Off Mode">Off Mode</button>
+        
+ </form> 
+      <table id="devices" >
+      <tr>  
+        <th> Room Description </th>
+        <th> Device Name </th>
+        <th> Alarm Raised</th> 
+        <th> Active </th>
+        <th> Operational </th>
+        <th> Action </th>
+        <th> Last Activity</th>
+      </tr>
+      {% for d in md2 %} 
+      <tr>
+      {% if d.alarmraised == 'True' %}
+        <td style="background-color:red"> {{ d.locname }} </td>
+        <td style="background-color:red"> {{ d.devname }} </td>
+        <td style="background-color:red"> {{ d.alarmraised }} </td>
+        <td style="background-color:red"> {{ d.alarmactive }} </td> 
+        <td style="background-color:red"> {{ d.lastupdatetimenoupdate }} </td>
+
+        <td style="background-color:red">  
+        <form action="/form_dev_reset">
+           
+          <input type="hidden" id="locname" name="locname" value="{{ d.locname }}">
+          <button type="submit" name = "devname" value="{{ d.devname }}">Reset Alarm</button>
+          
+        </form>    
+        
+        
+        
+        
+        </td>
+        <td style="background-color:red">  </td>
+      {% elif d.alarmactive == 'False' %}
+        <td style="background-color:orange"> {{ d.locname }}  </td>
+        <td style="background-color:orange">  {{ d.devname }}  </td>
+        <td style="background-color:orange">  {{ d.alarmraised }} </td>      
+        <td style="background-color:orange"> {{ d.alarmactive }} </td> 
+        <td style="background-color:orange">  {{ d.lastupdatetimenoupdate }} </td>      
+        <td style="background-color:orange">   </td> 
+        <td style="background-color:orange"> </td>
+      {% else %}   
+        <td> {{ d.locname }}  </td>
+        <td> {{ d.devname }}  </td>
+        <td> {{ d.alarmraised }} </td>
+        <td> {{ d.alarmactive }} </td> 
+        <td> {{ d.lastupdatetimenoupdatetime }} </td> 
+        <td>  </td>
+        <td>  </td>
+      {% endif %}  
+      </tr>
+            {% endfor %} 
+      </table>
+    </div>
+  </div>
+  
+
+ </div> 
+</body>
+
+
+{% endblock %}

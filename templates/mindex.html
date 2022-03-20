@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{% block title %} Welcome to FlaskBlog {% endblock %}</h1>
+    {% for d in md %}
+        <a href="#">
+            <h2>  {{ d.name }}  {{ d.status }} </h2></a>
+         
+         
+
+    {% endfor %}
+{% endblock %}
